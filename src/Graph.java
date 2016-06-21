@@ -31,6 +31,10 @@ public class Graph {
             this.nodes.put(v.getLabel(), v);
     }
     
+    public String getName(){
+    	return this.name;
+    }
+    
     public boolean addEdge(Node one, Node two, HashMap<String, String> attributes){
 
         if(one.equals(two))

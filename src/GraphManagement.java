@@ -63,6 +63,13 @@ public class GraphManagement {
     	collection.insert((BasicDBObject)JSON.parse(json));
 	}
 	
+	public void guardarGrafo(Graph g){
+		BasicDBObject queryTest = new BasicDBObject("nombre", g.getName());
+    	collection.remove(queryTest);   	
+    	
+    	this.importJSON(g.toJSON());
+	}
+	
 	public String exportJSON(String nombre){
 		BasicDBObject queryTest = new BasicDBObject("nombre", nombre);
     	DBCursor cursor = collection.find(queryTest);   	
