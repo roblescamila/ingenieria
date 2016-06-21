@@ -99,6 +99,51 @@ public class Graph {
         return v;
     }
     
+    public String toJSON(){
+    	BasicDBObject grafo = new BasicDBObject();
+    	grafo.put("nombre", this.name);
+    	
+    	List<BasicDBObject> aux = new ArrayList<BasicDBObject>();
+    	for(Node n:this.nodes.values()){
+    		BasicDBObject bo = new BasicDBObject();
+    		bo.put("proceso", n.getLabel());
+    		List<BasicDBObject> listAux = new ArrayList<BasicDBObject>();
+	    	HashMap<String, String> atts = n.getAttributes();
+	    	for(String key:atts.keySet()){
+	    		BasicDBObject aa = new BasicDBObject();
+	    		aa.put("nombre", key);
+	    		aa.put("descripcion", atts.get(key));
+	    		listAux.add(aa);
+	    	}
+	    	bo.put("atributos", listAux);
+    		aux.add(bo);
+    	}    		
+    	
+    	grafo.put("nodos", aux);
+    	
+    	List<BasicDBObject> auxVert = new ArrayList<BasicDBObject>();
+    	for(Edge ar:this.edges.values()){
+	    	BasicDBObject a = new BasicDBObject();
+	    	a.put("origen", ar.getOne().getLabel());
+	    	System.out.println(ar.getOne().getLabel());
+	    	a.put("destino", ar.getTwo().getLabel());
+	    	System.out.println(ar.getTwo().getLabel());
+	    	List<BasicDBObject> listAux = new ArrayList<BasicDBObject>();
+	    	HashMap<String, String> atts = ar.getAttributes();
+	    	for(String key:atts.keySet()){
+	    		BasicDBObject bo = new BasicDBObject();
+	    		bo.put("nombre", key);
+	    		bo.put("descripcion", atts.get(key));
+	    		listAux.add(bo);
+	    	}
+	    	a.put("atributos", listAux);
+	    	auxVert.add(a);
+    	}
+    	System.out.println("");
+    	grafo.put("arcos", auxVert);
+    	
+    	return grafo.toString();
+    }
     
     public void fromJSON(String j){
     	BasicDBObject o = (BasicDBObject)JSON.parse(j);
