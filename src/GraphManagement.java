@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.List;
 
 import com.mongodb.BasicDBObject;
@@ -20,6 +21,42 @@ public class GraphManagement {
 
     	database = mongoClient.getDB("test");
     	collection = database.getCollection("test");
+    	
+    	/**** EJEMPLO GRAFO******/
+    	HashMap<String, String> atts1 = new HashMap<String, String>();
+    	atts1.put("a", "aaaaa");
+    	Node a = new Node("REQM", atts1);
+    	
+    	HashMap<String, String> atts2 = new HashMap<String, String>();
+    	atts2.put("b", "bbbbb");
+    	Node b = new Node("PMC", atts2);  
+    	
+    	HashMap<String, String> atts3 = new HashMap<String, String>();
+    	atts3.put("e", "eeee");
+    	Node c = new Node("RM", atts3);
+    	
+    	
+    	HashMap<String, String> atts4 = new HashMap<String, String>();
+    	atts4.put("c", "ccccccc");
+    	atts4.put("d", "dddddd");
+    	
+    	HashMap<String, String> atts5 = new HashMap<String, String>();
+    	atts5.put("f", "fffff");
+    	atts5.put("g", "ggggg");
+    	
+    	
+    	Graph g = new Graph("ProcesosQuinto");
+    	g.addNode(a, true);
+    	g.addNode(b, true);
+    	g.addNode(c, true);
+    	g.addEdge(a, b, atts4);
+    	g.addEdge(a, c, atts5);
+    	importJSON(g.toJSON());
+    	/**** EJEMPLO GRAFO******/
+    	
+    	Graph g2 = new Graph();
+    	g2.fromJSON(g.toJSON());
+    	this.importJSON(g2.toJSON());
 	}
 	
 	public void importJSON(String json){
