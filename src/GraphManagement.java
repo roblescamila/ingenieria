@@ -1,3 +1,5 @@
+import java.util.List;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -11,6 +13,7 @@ public class GraphManagement {
 	private MongoClient mongoClient;
 	private DB database;
 	private DBCollection collection;
+	private List<Graph> grafos;
 	
 	public GraphManagement(){
 		mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
