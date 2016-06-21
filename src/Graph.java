@@ -98,6 +98,36 @@ public class Graph {
 
         return v;
     }
+    
+    
+    public void fromJSON(String j){
+    	BasicDBObject o = (BasicDBObject)JSON.parse(j);
+    	this.name = (String)o.get("nombre");
+    	
+    	
+    	List<BasicDBObject> aux = (List<BasicDBObject>) o.get("nodos");
+    	for(BasicDBObject bo: aux){
+        	HashMap<String, String> atts1 =  new HashMap<String, String>();
+    		List<BasicDBObject> listAux = (List<BasicDBObject>) bo.get("atributos");
+    		for(BasicDBObject a:listAux)
+    			atts1.put(a.getString("nombre"), a.getString("descripcion"));   
+    		this.addNode(new Node(bo.getString("proceso"), atts1), true);
+    	}
+    	
+    	
+    	
+    	List<BasicDBObject> auxVert = (List<BasicDBObject>) o.get("arcos");
+    	for(BasicDBObject bo: auxVert){
+        	HashMap<String, String> atts =  new HashMap<String, String>();
+    		List<BasicDBObject> listAux = (List<BasicDBObject>) bo.get("atributos");
+    		for(BasicDBObject a:listAux)
+    			atts.put(a.getString("nombre"), a.getString("descripcion"));   
+    		
+    		this.addEdge(this.getNode(bo.getString("origen")), this.getNode(bo.getString("destino")), atts);
+    	}
+    		
+    	
+    }
 
     public Set<String> NodoKeys(){
         return this.nodes.keySet();
