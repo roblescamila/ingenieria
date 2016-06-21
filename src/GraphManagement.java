@@ -1,7 +1,11 @@
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.util.JSON;
 
 public class GraphManagement {
 	private MongoClient mongoClient;
@@ -13,6 +17,18 @@ public class GraphManagement {
 
     	database = mongoClient.getDB("test");
     	collection = database.getCollection("test");
+	}
+	
+	public void importJSON(String json){
+    	collection.insert((BasicDBObject)JSON.parse(json));
+	}
+	
+	public String exportJSON(String nombre){
+		BasicDBObject queryTest = new BasicDBObject("nombre", nombre);
+    	DBCursor cursor = collection.find(queryTest);   	
+    	
+    	DBObject item = cursor.next();
+    	return item.toString();
 	}
 	
 	public static void main(String[] args){
