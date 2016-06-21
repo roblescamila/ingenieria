@@ -13,6 +13,9 @@ public class Node {
         this.neighborhood = new ArrayList<Edge>();
     }
 
+    public void setLabel(String s){
+    	this.label = s;
+    }
     public HashMap<String, String> getAttributes(){
     	return this.attribute;
     }

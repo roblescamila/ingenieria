@@ -35,6 +35,10 @@ public class Graph {
     	return this.name;
     }
     
+    public void setName(String n){
+    	this.name = n;
+    }
+    
     public boolean addEdge(Node one, Node two, HashMap<String, String> attributes){
 
         if(one.equals(two))

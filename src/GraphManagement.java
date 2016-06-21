@@ -54,9 +54,14 @@ public class GraphManagement {
     	importJSON(g.toJSON());
     	/**** EJEMPLO GRAFO******/
     	
+    	
     	Graph g2 = new Graph();
     	g2.fromJSON(g.toJSON());
+    	g2.setName("Procesos");
     	this.importJSON(g2.toJSON());
+    	
+    	g.getNode("REQM").setLabel("hola");
+    	saveGraph(g);
 	}
 	
 	public void importJSON(String json){
