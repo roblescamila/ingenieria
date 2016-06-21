@@ -63,7 +63,7 @@ public class GraphManagement {
     	collection.insert((BasicDBObject)JSON.parse(json));
 	}
 	
-	public void guardarGrafo(Graph g){
+	public void saveGraph(Graph g){
 		BasicDBObject queryTest = new BasicDBObject("nombre", g.getName());
     	collection.remove(queryTest);   	
     	
