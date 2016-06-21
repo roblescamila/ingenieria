@@ -125,9 +125,7 @@ public class Graph {
     	for(Edge ar:this.edges.values()){
 	    	BasicDBObject a = new BasicDBObject();
 	    	a.put("origen", ar.getOne().getLabel());
-	    	System.out.println(ar.getOne().getLabel());
 	    	a.put("destino", ar.getTwo().getLabel());
-	    	System.out.println(ar.getTwo().getLabel());
 	    	List<BasicDBObject> listAux = new ArrayList<BasicDBObject>();
 	    	HashMap<String, String> atts = ar.getAttributes();
 	    	for(String key:atts.keySet()){
@@ -139,7 +137,6 @@ public class Graph {
 	    	a.put("atributos", listAux);
 	    	auxVert.add(a);
     	}
-    	System.out.println("");
     	grafo.put("arcos", auxVert);
     	
     	return grafo.toString();
