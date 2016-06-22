@@ -1,3 +1,4 @@
+package core;
 import java.util.HashMap;
 
 public class Edge implements Comparable<Edge> {

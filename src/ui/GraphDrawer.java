@@ -2,6 +2,9 @@ package ui;
 
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
+
+import core.Graph;
+
 import javax.swing.JScrollPane;
 
 
@@ -17,19 +20,18 @@ public class GraphDrawer {
     
     public GraphDrawer(JScrollPane graphPanel){
         this.graphPanel = graphPanel;
-        drawGraph("s"); //NO SE POR QU� EL STRING
     }
     
    
     //Change type of parameter as Graph
     //This method performs mapping from "model graph" to "view graph".
-    public void drawGraph(String graph){
+    public void drawGraph(Graph  g){
         //Not implemented method.
         //Generate a mxGraphComponent from Graph.
-        forDebug(graph);      
+        forDebug(g);      
     }
     
-    public void forDebug(String name){
+    public void forDebug(Graph g){
         //Delete this.
         this.graph = new mxGraph();
         Object parent = graph.getDefaultParent();
@@ -37,12 +39,14 @@ public class GraphDrawer {
         try
         { 
             //Discuss how set the x and y to each vertex.
+        	
+        	System.out.println(g.getName());
+        	/* HAY QUE DIBUJARLO AC�
+        	
             if (name == "Correlativas"){                
-                Object v1 = graph.insertVertex(parent, null, "Diseño",
-                    20, 20, 80,30);
+                Object v1 = graph.insertVertex(parent, null, "Diseño", 20, 20, 80,30);
                 
-                Object v2 = graph.insertVertex(parent, null, "Ingeniería",
-                            220, 150, 80, 30);
+                Object v2 = graph.insertVertex(parent, null, "Ingeniería", 220, 150, 80, 30);
 
                 graph.insertEdge(parent, null, "", v1, v2);  
             }else{
@@ -54,7 +58,7 @@ public class GraphDrawer {
 
                 graph.insertEdge(parent, null, "", v1, v2);          
             
-            }
+            }*/
           
            
         }

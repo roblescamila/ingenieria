@@ -1,3 +1,5 @@
+package core;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,9 +23,10 @@ public class GraphManagement {
 
     	database = mongoClient.getDB("test");
     	collection = database.getCollection("test");
+    	grafos = new ArrayList<Graph>();
     	
     	/**** EJEMPLO GRAFO******/
-    	HashMap<String, String> atts1 = new HashMap<String, String>();
+    	/*HashMap<String, String> atts1 = new HashMap<String, String>();
     	atts1.put("a", "aaaaa");
     	Node a = new Node("REQM", atts1);
     	
@@ -42,10 +45,10 @@ public class GraphManagement {
     	
     	HashMap<String, String> atts5 = new HashMap<String, String>();
     	atts5.put("f", "fffff");
-    	atts5.put("g", "ggggg");
+    	atts5.put("g", "ggggg");*/
     	
     	
-    	Graph g = new Graph("ProcesosQuinto");
+    	/*Graph g = new Graph("ProcesosQuinto");
     	g.addNode(a, true);
     	g.addNode(b, true);
     	g.addNode(c, true);
@@ -55,17 +58,48 @@ public class GraphManagement {
     	/**** EJEMPLO GRAFO******/
     	
     	
-    	Graph g2 = new Graph();
+    	/*Graph g2 = new Graph();
     	g2.fromJSON(g.toJSON());
     	g2.setName("Procesos");
-    	this.importJSON(g2.toJSON());
+    	this.importJSON(g2.toJSON());*/
     	
-    	g.getNode("REQM").setLabel("hola");
-    	saveGraph(g);
 	}
 	
-	public void importJSON(String json){
+	public Graph importJSON(String json){
+		Graph aux = new Graph();
+		aux.fromJSON(json);
     	collection.insert((BasicDBObject)JSON.parse(json));
+    	this.grafos.add(aux);
+    	return aux;
+	}
+	
+	public Graph createGraph(String name){
+		Graph a = new Graph(name);
+		this.grafos.add(a);
+		return a;
+	}
+	
+	public void loadGraphs(){
+		List<String> gs = this.getAllProyects();
+		for(String n:gs){
+			Graph aux = new Graph(n);
+			aux.fromJSON(this.exportJSON(n));
+			this.grafos.add(aux);		
+		}
+	}
+	
+	public Graph getGraph(String g){
+		for(Graph a:this.grafos)
+			if(a.getName().equals(g))
+				return a;
+		return null;
+	}
+	
+	public List<String> getAllProyects(){
+		List<String> out = new ArrayList<String>();
+    	out = collection.distinct("nombre");
+    	
+		return out;
 	}
 	
 	public void saveGraph(Graph g){

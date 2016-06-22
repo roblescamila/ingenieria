@@ -1,11 +1,17 @@
 package ui;
 
 
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
+
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+
+import core.Graph;
+import core.GraphManagement;
 
 
 /**
@@ -21,7 +27,7 @@ public class ProyectTree{
     private JTree projectTree ;
     private final DefaultTreeModel model;
     private GraphDrawer drawer;
-    
+    private GraphManagement gm;
     //private Graph current;
     //This is the graph that will be modified and possibly removed.
     
@@ -30,6 +36,10 @@ public class ProyectTree{
         this.init();
         System.out.println("Init...");
         this.model = (DefaultTreeModel)projectTree.getModel();
+    }
+    
+    public GraphManagement getManagement(){
+    	return this.gm;
     }
     
     public static ProyectTree getInstance(){
@@ -45,8 +55,10 @@ public class ProyectTree{
     
     //Initialize database and generate tree.
     private void init(){
-        //Not implemented correctly.        
-        this.forDebug(); //Delete this.
+        //Not implemented correctly.     
+        this.gm = new GraphManagement(); 
+        gm.loadGraphs();
+        this.initProyects(); //Delete this.
         projectTree = new JTree(root);
        
         //Listener for when a item of project tree was clicked.
@@ -101,18 +113,24 @@ public class ProyectTree{
         //Set current graph
         
         
-        this.drawer.drawGraph(name);
+        this.drawer.drawGraph(this.gm.getGraph(name));
+    }
+    
+    public void addGraph(Graph g){
+    	DefaultMutableTreeNode g2 = new DefaultMutableTreeNode(g.getName());
+    	root.add(g2);
+    	this.model.reload();
     }
     
     
-    private void forDebug(){
+    private void initProyects(){
         //Delete this..
-        
-        root = new DefaultMutableTreeNode("Proyects");       
-        DefaultMutableTreeNode g1 = new DefaultMutableTreeNode("CMMI");
-        DefaultMutableTreeNode g2 = new DefaultMutableTreeNode("Correlativas");
-        root.add(g1);
-        root.add(g2);
+        List<String> a = this.gm.getAllProyects();
+        root = new DefaultMutableTreeNode("Proyects"); 
+        for(String s:a){
+        	DefaultMutableTreeNode g2 = new DefaultMutableTreeNode(s);
+        	root.add(g2);
+        }
         
     }
 
