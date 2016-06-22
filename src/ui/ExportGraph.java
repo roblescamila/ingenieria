@@ -1,6 +1,9 @@
+package ui;
 import java.io.File;
 
-public class Export {
+public class ExportGraph {
+	
+	public ExportGraph(){}
 	
 	/***
 	 * 
@@ -24,5 +27,10 @@ public class Export {
 	    gv.decreaseDpi();
 	    File out = new File(fileName + "." + type); 
 	    gv.writeGraphToFile(gv.getGraph(gv.getDotSource(), type), out);
+	}
+
+	public static String toDotFormat() {
+		
+		return null;
 	}
 }
