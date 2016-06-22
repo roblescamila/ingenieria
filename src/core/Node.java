@@ -6,11 +6,11 @@ import java.util.HashMap;
 public class Node {
     private ArrayList<Edge> neighborhood;
     private String label;
-    private HashMap<String, String> attribute;
+    private HashMap<String, String> attributes;
 
     public Node(String label, HashMap<String, String> hm){
         this.label = label;
-        this.attribute = hm;
+        this.attributes = hm;
         this.neighborhood = new ArrayList<Edge>();
     }
 
@@ -18,7 +18,7 @@ public class Node {
     	this.label = s;
     }
     public HashMap<String, String> getAttributes(){
-    	return this.attribute;
+    	return this.attributes;
     }
     public void addNeighbor(Edge edge){
         if(this.neighborhood.contains(edge))
