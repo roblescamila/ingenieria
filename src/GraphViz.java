@@ -1,10 +1,21 @@
 public class GraphViz{	
-
-	public GraphViz(String dotPath, String exportPath){
-		draw(dotPath, exportPath);
+	private String format;
+	
+	public GraphViz(String dotPath, String exportPath, String form){
+		format = form;
+		draw(dotPath, exportPath, format);
+		
 	}
 	
-	public void draw(String dotPath, String exportPath){
+	public void setFormat(String form){
+		format = form;
+	}
+	
+	public String getFormat(){
+		return format;
+	}
+	
+	public void draw(String dotPath, String exportPath, String format){
 		try
 		{       
 			ProcessBuilder pbuilder;
@@ -14,7 +25,7 @@ public class GraphViz{
 			 * en la linea de comandos esto es: 
 			 * dot -Tpng -o archivo.png archivo.dot
 			 */
-			pbuilder = new ProcessBuilder("C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe", "-Tpng", "-o", exportPath, dotPath);
+			pbuilder = new ProcessBuilder("C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe", "-T" + format, "-o", exportPath, dotPath);
 			pbuilder.redirectErrorStream(true);
 			//Ejecuta el proceso
 			pbuilder.start();
