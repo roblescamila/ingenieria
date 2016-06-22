@@ -15,10 +15,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
+<<<<<<< HEAD
 import core.Graph;
 import core.GraphManagement;
 
 
+=======
+>>>>>>> c9a85e5b18b89b1fde71a0d947c7baffafc273f4
 public class GraphEditor extends javax.swing.JFrame {
 	private ProyectTree projects;
     private GraphManagement gm;
@@ -73,8 +76,11 @@ public class GraphEditor extends javax.swing.JFrame {
     }
     
     private void exportPDF(){
-        //Not implemented method.
         System.out.println("Export PDF..");
+        
+        String dotFormat = ExportGraph.toDotFormat(); //"1->2;1->3;1->4;4->5;4->6;6->7;5->7;3->8;3->6;8->7;2->8;2->5;";
+        ExportGraph.createDotGraph(dotFormat, "New Graph");
+    	
         this.detailsLabel.setText("Exported to PDF..");
         
     }
