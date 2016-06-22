@@ -17,6 +17,7 @@ public class GraphDrawer {
     
     public GraphDrawer(JScrollPane graphPanel){
         this.graphPanel = graphPanel;
+        drawGraph("s"); //NO SE POR QUÉ EL STRING
     }
     
    
