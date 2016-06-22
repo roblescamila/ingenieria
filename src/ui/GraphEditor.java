@@ -5,11 +5,26 @@
  */
 package ui;
 
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
+<<<<<<< HEAD
+import core.Graph;
+import core.GraphManagement;
+
+
+=======
+>>>>>>> c9a85e5b18b89b1fde71a0d947c7baffafc273f4
 public class GraphEditor extends javax.swing.JFrame {
- 
+	private ProyectTree projects;
+    private GraphManagement gm;
     /**
 	 * 
 	 */
@@ -22,7 +37,8 @@ public class GraphEditor extends javax.swing.JFrame {
     private void init(){ 
         
         //Getting all projects in database.
-    	ProyectTree projects = ProyectTree.getInstance();
+    	 projects = ProyectTree.getInstance();
+    	this.gm = projects.getManagement();
         this.scrollProyectsPanel.setViewportView(projects.getProyectTreeComponent());
         GraphDrawer graphDrawer = new GraphDrawer(this.graphPanel);
         projects.setDrawer(graphDrawer);
@@ -31,16 +47,32 @@ public class GraphEditor extends javax.swing.JFrame {
    
     private void newGraph(){
         //Not implemented method.
-        System.out.println("New Graph..");       
-    
-        JOptionPane.showMessageDialog(null, "Implement window to edit and create new graphs");
-
+        System.out.println("New Graph..");     
+        Graph aux = gm.createGraph(JOptionPane.showInputDialog("Enter name: "));
+        projects.addGraph(aux);
     }
     
     private void importGraph(){
         //Not implemented method.
-        System.out.println("Import Graph..");
+    	String out = "";
+    	JFileChooser fc = new JFileChooser();
+		fc.setCurrentDirectory(new java.io.File("."));
+		fc.showSaveDialog(this); 
+		File f = new File(fc.getSelectedFile().getAbsolutePath());
+        try {
+            byte[] bytes = Files.readAllBytes(f.toPath());
+             out = new String(bytes,"UTF-8");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+            
+        }
+        Graph aux = null;
+        if(!out.isEmpty())
+        	aux = this.gm.importJSON(out);
         this.detailsLabel.setText("Import Graph..");
+        projects.addGraph(aux);
     }
     
     private void exportPDF(){
