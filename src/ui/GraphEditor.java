@@ -7,9 +7,12 @@ package ui;
 
 
 
+import java.awt.HeadlessException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 
 import javax.swing.JFileChooser;
@@ -87,7 +90,22 @@ public class GraphEditor extends javax.swing.JFrame {
     
     private void exportJSON(){
         //Not implemented method.
-        System.out.println("Export JSON..");        
+    	PrintWriter writer = null;
+		try {
+			writer = new PrintWriter(JOptionPane.showInputDialog("Enter output name: ")+".json", "UTF-8");
+		} catch (HeadlessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	writer.println(this.projects.getCurrent().toJSON());
+    	writer.close();
+         
         this.detailsLabel.setText("Exported to JSON..");
     }
     
@@ -233,7 +251,7 @@ public class GraphEditor extends javax.swing.JFrame {
         });
         jMenu3.add(menuPDFItem);
 
-        menuGAXPPItem.setText("gaxpp");
+        menuGAXPPItem.setText("json");
         menuGAXPPItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuGAXPPItemActionPerformed(evt);
