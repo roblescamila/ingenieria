@@ -13,7 +13,11 @@ public class GraphEditor extends javax.swing.JFrame {
  
     
 
-    public GraphEditor() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7412994067181639826L;
+	public GraphEditor() {
         initComponents();
         init();
     }
