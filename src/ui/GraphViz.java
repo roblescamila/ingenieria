@@ -1,4 +1,5 @@
 package ui;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -67,12 +68,13 @@ public class GraphViz
     /**
      * The dir. where temporary files will be created.
      */
-  private static String TEMP_DIR = "C:\temp";
+  private static String TEMP_DIR = "C:\\temp";
 
     /**
      * Where is your dot program located? It will be called externally.
      */
-  private static String DOT = configFile.getProperty("dotFor" + osName);
+  //private static String DOT = configFile.getProperty("dotFor" + osName);
+  private static String DOT = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
 
     /**
      * The image size in dpi. 96 dpi is normal size. Higher values are 10% higher each.
@@ -186,7 +188,8 @@ public class GraphViz
      */
     public int writeGraphToFile(byte[] img, String file)
     {
-        File to = new File(file);
+    	
+        File to = new File(file);        
         return writeGraphToFile(img, to);
     }
 
@@ -219,11 +222,19 @@ public class GraphViz
         byte[] img_stream = null;
 
         try {
-            img = File.createTempFile("graph_", "."+type, new File(GraphViz.TEMP_DIR));
+        	File temp = new File(GraphViz.TEMP_DIR);
+//       	if(temp.isDirectory()){System.out.println("Temp is directory.. "+ temp.getAbsolutePath());}
+            img = File.createTempFile("graph_", "."+type, temp);
+
+//            img = File.createTempFile("graph_", "."+type, new File(GraphViz.TEMP_DIR));
             Runtime rt = Runtime.getRuntime();
+            
+//            System.out.println("DOT: " + DOT);
 
             // patch by Mike Chenault
-            String[] args = {DOT, "-T"+type, "-Gdpi="+dpiSizes[this.currentDpiPos], dot.getAbsolutePath(), "-o", img.getAbsolutePath()};
+             String[] args = {DOT, "-T"+type, "-Gdpi="+dpiSizes[this.currentDpiPos], dot.getAbsolutePath(), "-o", img.getAbsolutePath()};
+//           String[] args = {DOT, "-T"+type, dot.getAbsolutePath(), "-o", img.getAbsolutePath()};
+
             Process p = rt.exec(args);
 
             p.waitFor();
@@ -260,10 +271,10 @@ public class GraphViz
     {
         File temp;
         try {
-            temp = File.createTempFile("dorrr",".dot", new File(GraphViz.TEMP_DIR));
+            temp = File.createTempFile("temp",".dot", new File("c:\\temp"));
             FileWriter fout = new FileWriter(temp);
             fout.write(str);
-                       BufferedWriter br=new BufferedWriter(new FileWriter("dotsource.dot"));
+                       BufferedWriter br = new BufferedWriter(new FileWriter("dotsource.dot"));
                        br.write(str);
                        br.flush();
                        br.close();
@@ -337,4 +348,4 @@ public class GraphViz
         this.graph = sb;
     }
 
-}
+} // end of class GraphViz

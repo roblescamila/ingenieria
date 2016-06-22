@@ -1,2 +1,0 @@
-# ingenieria
-Experiencia scrum

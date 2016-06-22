@@ -27,6 +27,7 @@ import core.GraphManagement;
 public class GraphEditor extends javax.swing.JFrame {
 	private ProyectTree projects;
     private GraphManagement gm;
+    private Wizard w;
     
     /**
 	 * 
@@ -128,8 +129,13 @@ public class GraphEditor extends javax.swing.JFrame {
     }
     
     private void editGraph(){
-        //Not implemented method.
+        w = new Wizard(projects.getCurrent(), this);
+        w.setVisible(true);
         System.out.println("Edit Graph");
+    }
+    
+    public void closeEdit(){
+        w.setVisible(false);
     }
             
     @SuppressWarnings("unchecked")
