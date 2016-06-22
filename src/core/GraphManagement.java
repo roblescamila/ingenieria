@@ -73,6 +73,12 @@ public class GraphManagement {
     	return aux;
 	}
 	
+	public void removeGraph(Graph g){
+		this.grafos.remove(g);
+		BasicDBObject queryTest = new BasicDBObject("nombre", g.getName());
+    	collection.remove(queryTest); 
+	}
+	
 	public Graph createGraph(String name){
 		Graph a = new Graph(name);
 		this.grafos.add(a);

@@ -28,7 +28,7 @@ public class ProyectTree{
     private final DefaultTreeModel model;
     private GraphDrawer drawer;
     private GraphManagement gm;
-    //private Graph current;
+    private Graph current;
     //This is the graph that will be modified and possibly removed.
     
     
@@ -112,16 +112,26 @@ public class ProyectTree{
         //GraphManagement.getGraph(name);
         //Set current graph
         
-        
-        this.drawer.drawGraph(this.gm.getGraph(name));
+        Graph a = this.gm.getGraph(name);
+        this.drawer.drawGraph(a);
+        this.current = a;
     }
     
     public void addGraph(Graph g){
     	DefaultMutableTreeNode g2 = new DefaultMutableTreeNode(g.getName());
     	root.add(g2);
     	this.model.reload();
+    	this.current = g;
     }
     
+    public void removeGraph(){
+    
+    	
+    }
+  
+    public Graph getCurrent(){
+    	return this.current;
+    }
     
     private void initProyects(){
         //Delete this..

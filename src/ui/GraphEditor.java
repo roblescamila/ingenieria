@@ -6,6 +6,7 @@
 package ui;
 
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,16 +16,15 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-<<<<<<< HEAD
 import core.Graph;
 import core.GraphManagement;
 
 
-=======
->>>>>>> c9a85e5b18b89b1fde71a0d947c7baffafc273f4
+
 public class GraphEditor extends javax.swing.JFrame {
 	private ProyectTree projects;
     private GraphManagement gm;
+    
     /**
 	 * 
 	 */
@@ -37,7 +37,7 @@ public class GraphEditor extends javax.swing.JFrame {
     private void init(){ 
         
         //Getting all projects in database.
-    	 projects = ProyectTree.getInstance();
+    	projects = ProyectTree.getInstance();
     	this.gm = projects.getManagement();
         this.scrollProyectsPanel.setViewportView(projects.getProyectTreeComponent());
         GraphDrawer graphDrawer = new GraphDrawer(this.graphPanel);
@@ -100,6 +100,7 @@ public class GraphEditor extends javax.swing.JFrame {
     
     private void removeGraph(){
         //Not implemented method.
+    	gm.removeGraph(projects.getCurrent());
         System.out.println("Remove graph");
     }
     
