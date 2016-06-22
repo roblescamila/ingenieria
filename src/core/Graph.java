@@ -83,6 +83,10 @@ public class Graph {
         return nodes.get(label);
     }
     
+    public Collection<Node> getNodes(){
+    	return nodes.values();
+    }
+    
     public boolean addNode(Node node, boolean overwriteExisting){
         Node current = this.nodes.get(node.getLabel());
         

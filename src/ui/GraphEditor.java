@@ -6,25 +6,29 @@
 package ui;
 
 
+
+import java.awt.HeadlessException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-<<<<<<< HEAD
 import core.Graph;
 import core.GraphManagement;
 
 
-=======
->>>>>>> c9a85e5b18b89b1fde71a0d947c7baffafc273f4
+
 public class GraphEditor extends javax.swing.JFrame {
 	private ProyectTree projects;
     private GraphManagement gm;
+    private Wizard w;
+    
     /**
 	 * 
 	 */
@@ -37,7 +41,7 @@ public class GraphEditor extends javax.swing.JFrame {
     private void init(){ 
         
         //Getting all projects in database.
-    	 projects = ProyectTree.getInstance();
+    	projects = ProyectTree.getInstance();
     	this.gm = projects.getManagement();
         this.scrollProyectsPanel.setViewportView(projects.getProyectTreeComponent());
         GraphDrawer graphDrawer = new GraphDrawer(this.graphPanel);
@@ -87,7 +91,22 @@ public class GraphEditor extends javax.swing.JFrame {
     
     private void exportJSON(){
         //Not implemented method.
-        System.out.println("Export JSON..");        
+    	PrintWriter writer = null;
+		try {
+			writer = new PrintWriter(JOptionPane.showInputDialog("Enter output name: ")+".json", "UTF-8");
+		} catch (HeadlessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	writer.println(this.projects.getCurrent().toJSON());
+    	writer.close();
+         
         this.detailsLabel.setText("Exported to JSON..");
     }
     
@@ -100,6 +119,7 @@ public class GraphEditor extends javax.swing.JFrame {
     
     private void removeGraph(){
         //Not implemented method.
+    	gm.removeGraph(projects.getCurrent());
         System.out.println("Remove graph");
     }
     
@@ -109,8 +129,13 @@ public class GraphEditor extends javax.swing.JFrame {
     }
     
     private void editGraph(){
-        //Not implemented method.
+        w = new Wizard(projects.getCurrent(), this);
+        w.setVisible(true);
         System.out.println("Edit Graph");
+    }
+    
+    public void closeEdit(){
+        w.setVisible(false);
     }
             
     @SuppressWarnings("unchecked")
@@ -232,7 +257,7 @@ public class GraphEditor extends javax.swing.JFrame {
         });
         jMenu3.add(menuPDFItem);
 
-        menuGAXPPItem.setText("gaxpp");
+        menuGAXPPItem.setText("json");
         menuGAXPPItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuGAXPPItemActionPerformed(evt);
