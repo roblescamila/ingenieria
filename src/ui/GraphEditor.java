@@ -11,8 +11,6 @@ import javax.swing.UIManager;
 
 public class GraphEditor extends javax.swing.JFrame {
  
-    
-
     /**
 	 * 
 	 */
@@ -25,7 +23,10 @@ public class GraphEditor extends javax.swing.JFrame {
     private void init(){ 
         
         //Getting all projects in database.
-        
+    	ProyectTree projects = ProyectTree.getInstance();
+        this.scrollProyectsPanel.setViewportView(projects.getProyectTreeComponent());
+        GraphDrawer graphDrawer = new GraphDrawer(this.graphPanel);
+        projects.setDrawer(graphDrawer);
       
     }
    
