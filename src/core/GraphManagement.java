@@ -108,11 +108,20 @@ public class GraphManagement {
 		return out;
 	}
 	
-	public void saveGraph(Graph g){
-		BasicDBObject queryTest = new BasicDBObject("nombre", g.getName());
-    	collection.remove(queryTest);   	
-    	
-    	this.importJSON(g.toJSON());
+	public void saveGraphs(){
+		List<String> jsons = new ArrayList<String>();
+		List<String> nombres = new ArrayList<String>();
+		for(int i=0 ; i<grafos.size() ; i++){
+			nombres.add(grafos.get(i).getName());
+			jsons.add(grafos.get(i).toJSON());	
+		}
+		for(String s:nombres){
+			BasicDBObject queryTest = new BasicDBObject("nombre", s);
+	    	collection.remove(queryTest);   
+		}
+		for(String s:jsons){
+			collection.insert((BasicDBObject)JSON.parse(s));
+		}
 	}
 	
 	public String exportJSON(String nombre){

@@ -1,5 +1,8 @@
 package core;
 import java.util.*;
+import java.util.jar.Attributes;
+
+import org.w3c.dom.Attr;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObjectCodec;
@@ -101,7 +104,13 @@ public class Graph {
 
         return true;
     }
-
+    
+    public void changeNodeLabel(String v, String n){
+    	Node no = this.nodes.get(v);
+    	nodes.remove(v);
+    	no.setLabel(n);
+    	this.nodes.put(n, no);
+    }
 
     public Node removeNode(String label){
         Node v = nodes.remove(label);
