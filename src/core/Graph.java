@@ -64,6 +64,28 @@ public class Graph {
 
         return true;
     }
+    
+    public boolean addEdge(Node one, Node two){
+
+        if(one.equals(two))
+            return false;
+
+        Edge e = new Edge(one, two);
+
+        if(edges.containsKey(e.hashCode()))
+            return false;
+        
+
+        else if(one.containsNeighbor(e) || two.containsNeighbor(e))
+            return false;
+        
+        edges.put(e.hashCode(), e);
+
+        one.addNeighbor(e);
+        two.addNeighbor(e);
+
+        return true;
+    }
 
     public boolean containsEdge(Edge e){
         if(e.getOne() == null || e.getTwo() == null)

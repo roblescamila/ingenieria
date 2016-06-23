@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.border.EmptyBorder;
 
+import core.Edge;
 import core.Graph;
 import core.Node;
 
@@ -32,17 +33,16 @@ public class Wizard extends JFrame {
 	private JComboBox comboBoxNodo;
 	private JComboBox comboBoxAttNodo;
 	private JTextField textFieldAttNodo;
-	private JTextField textField_1;
+	private JTextField textDescEdge;
 	private JTextField textNode;
 	private JTextField textAttNode;
-	private JTextField textField_5;
+	private JTextField textAttEdge;
 	private JComboBox comboBoxEdgeOrg;
-	private JComboBox comboBoxEdgeDest;
+	private final JComboBox comboBoxAttEdge;
 	
 	public Wizard(final Graph g, final GraphEditor ge) {
 		this.ge = ge;
 		this.g = g;
-		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 581, 458);
@@ -74,7 +74,6 @@ public class Wizard extends JFrame {
 				Node n = searchNode((String)comboBoxNodo.getSelectedItem());
 				if(n!=null){
 					HashMap<String, String> aux = n.getAttributes();
-					Set<String> keys = aux.keySet();
 					textFieldAttNodo.setText(aux.get((String)comboBoxAttNodo.getSelectedItem()));
 				}
 			}
@@ -98,25 +97,37 @@ public class Wizard extends JFrame {
 		lblArco.setBounds(65, 136, 46, 14);
 		contentPane.add(lblArco);
 		
+		comboBoxAttEdge = new JComboBox();
+		comboBoxAttEdge.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				Edge e = searchEdge((String)comboBoxEdgeOrg.getSelectedItem());
+				if(e!=null){
+					HashMap<String, String> aux = e.getAttributes();
+					textDescEdge.setText(aux.get((String)comboBoxAttEdge.getSelectedItem()));
+				}
+				
+			}
+		});
+		comboBoxAttEdge.setBounds(231, 162, 121, 20);
+		contentPane.add(comboBoxAttEdge);		
+		
 		comboBoxEdgeOrg = new JComboBox();
+		comboBoxEdgeOrg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				Edge e = searchEdge((String)comboBoxEdgeOrg.getSelectedItem());
+				if(e!=null){
+					HashMap<String, String> aux = e.getAttributes();
+					Set<String> keys = aux.keySet();
+					comboBoxAttEdge.removeAllItems();
+					for(String s:keys)
+						comboBoxAttEdge.addItem(s);
+					textDescEdge.setText(aux.get((String)comboBoxAttEdge.getSelectedItem()));
+				}
+			}
+		});
 		comboBoxEdgeOrg.setBounds(65, 162, 121, 20);
 		contentPane.add(comboBoxEdgeOrg);
 		
-		comboBoxEdgeDest = new JComboBox();
-		comboBoxEdgeDest.setBounds(65, 193, 121, 20);
-		contentPane.add(comboBoxEdgeDest);
-		
-		JLabel lblOrigen = new JLabel("Origen");
-		lblOrigen.setBounds(10, 165, 46, 14);
-		contentPane.add(lblOrigen);
-		
-		JLabel lblDestino = new JLabel("Destino");
-		lblDestino.setBounds(10, 196, 46, 14);
-		contentPane.add(lblDestino);
-		
-		JComboBox comboBox_5 = new JComboBox();
-		comboBox_5.setBounds(231, 162, 121, 20);
-		contentPane.add(comboBox_5);
 		
 		JLabel lblAtributo_1 = new JLabel("Atributo");
 		lblAtributo_1.setBounds(231, 136, 46, 14);
@@ -137,13 +148,17 @@ public class Wizard extends JFrame {
 		btnNuevoNodo.setBounds(65, 281, 121, 23);
 		contentPane.add(btnNuevoNodo);
 		
-		JButton btnNewButton = new JButton("Nuevo Arco");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnNewEdge = new JButton("Nuevo Arco");
+		btnNewEdge.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Node a = searchNode(JOptionPane.showInputDialog("Enter source name: "));
+				Node b = searchNode(JOptionPane.showInputDialog("Enter target name: "));
+				g.addEdge(a, b);
+				initCombos();
 			}
 		});
-		btnNewButton.setBounds(231, 281, 121, 23);
-		contentPane.add(btnNewButton);
+		btnNewEdge.setBounds(231, 281, 121, 23);
+		contentPane.add(btnNewEdge);
 		
 		JButton btnNuevoAtributoNodo = new JButton("Nuevo Atributo");
 		btnNuevoAtributoNodo.addActionListener(new ActionListener() {
@@ -176,10 +191,10 @@ public class Wizard extends JFrame {
 		contentPane.add(textFieldAttNodo);
 		textFieldAttNodo.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(397, 162, 121, 20);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		textDescEdge = new JTextField();
+		textDescEdge.setBounds(397, 162, 121, 20);
+		contentPane.add(textDescEdge);
+		textDescEdge.setColumns(10);
 		
 		textNode = new JTextField();
 		textNode.setBounds(65, 76, 121, 20);
@@ -191,12 +206,21 @@ public class Wizard extends JFrame {
 		contentPane.add(textAttNode);
 		textAttNode.setColumns(10);
 		
-		textField_5 = new JTextField();
-		textField_5.setBounds(231, 193, 121, 20);
-		contentPane.add(textField_5);
-		textField_5.setColumns(10);
+		textAttEdge = new JTextField();
+		textAttEdge.setBounds(231, 193, 121, 20);
+		contentPane.add(textAttEdge);
+		textAttEdge.setColumns(10);
 		
 		JButton btnNuevoAtributo_1 = new JButton("Nuevo Atributo");
+		btnNuevoAtributo_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				Edge e = searchEdge((String)comboBoxEdgeOrg.getSelectedItem());
+				if(e!=null){
+					e.addAttribute(JOptionPane.showInputDialog("Enter atttribute name: "), JOptionPane.showInputDialog("Enter attribute description: "));
+				}
+				initCombos();
+			}
+		});
 		btnNuevoAtributo_1.setBounds(397, 193, 121, 23);
 		contentPane.add(btnNuevoAtributo_1);
 		
@@ -219,8 +243,19 @@ public class Wizard extends JFrame {
 							textAttNode.setText("");
 						}
 					}
-					initCombos();
 				}
+				Edge e = searchEdge((String)comboBoxEdgeOrg.getSelectedItem());
+				if(e!=null){
+					if(!textAttEdge.getText().isEmpty())
+						e.changeAttribute((String)comboBoxAttEdge.getSelectedItem(), textAttEdge.getText());
+					if(!textDescEdge.getText().isEmpty())
+						if(!textAttEdge.getText().isEmpty()){
+							e.changeDescription(textAttEdge.getText(), textDescEdge.getText());
+							textAttEdge.setText("");
+						}
+						else e.changeDescription((String)comboBoxAttEdge.getSelectedItem(), textDescEdge.getText());
+				}
+				initCombos();
 			}
 		});
 		btnGuardar.setBounds(397, 281, 121, 57);
@@ -249,9 +284,28 @@ public class Wizard extends JFrame {
 		btnNewButton_2.setBounds(65, 315, 121, 23);
 		contentPane.add(btnNewButton_2);
 		
-		JButton btnNewButton_3 = new JButton("Eliminar Arco");
-		btnNewButton_3.setBounds(231, 315, 121, 23);
-		contentPane.add(btnNewButton_3);
+		JButton btnRemoveEdge = new JButton("Eliminar Arco");
+		btnRemoveEdge.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				g.removeEdge(searchEdge((String)comboBoxEdgeOrg.getSelectedItem()));
+				initCombos();
+			}
+		});
+		btnRemoveEdge.setBounds(231, 315, 121, 23);
+		contentPane.add(btnRemoveEdge);
+		
+		JButton btnNewButton = new JButton("Eliminar Atributo");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				Edge e = searchEdge((String)comboBoxEdgeOrg.getSelectedItem());
+				if(e!=null){
+					e.removeAttribute((String)comboBoxAttEdge.getSelectedItem());
+				}
+				initCombos();
+			}
+		});
+		btnNewButton.setBounds(397, 227, 121, 23);
+		contentPane.add(btnNewButton);
 		
 		this.initCombos();
 	}
@@ -263,13 +317,26 @@ public class Wizard extends JFrame {
 		return null;
 	}
 	
+	private Edge searchEdge(String org){
+		Edge out = null;
+		for(Edge e:g.getEdges()){
+			if(org !=null && e.getOne()!=null && e.getTwo()!=null && org.equals(e.getOne().getLabel()+"->"+e.getTwo().getLabel()))
+				out = e;
+		}
+		return out;
+	}
+	
 	public void initCombos(){
 		comboBoxNodo.removeAllItems();
 		comboBoxAttNodo.removeAllItems();
 		for(Node n:g.getNodes())
-			comboBoxNodo.addItem(n.getLabel());	
+			comboBoxNodo.addItem(n.getLabel());
 		
-		//for(Edge e:g.getEdges())
-			//comboBoxEdgeOrg.s
+		comboBoxEdgeOrg.removeAllItems();
+		comboBoxAttEdge.removeAllItems();
+		for(Edge e:g.getEdges()){
+			comboBoxEdgeOrg.addItem(e.getOne().getLabel()+"->"+e.getTwo().getLabel());
+		}
+			
 	}
 }

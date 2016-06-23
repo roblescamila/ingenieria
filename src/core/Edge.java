@@ -32,6 +32,24 @@ public class Edge implements Comparable<Edge> {
     public Node getOne(){
         return this.one;
     }
+    
+    public void addAttribute(String a, String b){
+    	this.attributes.put(a, b);
+    }
+    
+    public void removeAttribute(String a){
+    	this.attributes.remove(a);
+    }
+    
+    public void changeAttribute(String a, String b){
+    	String aux = this.attributes.get(a);
+    	attributes.remove(a);
+    	attributes.put(b, aux);
+    }
+    
+    public void changeDescription(String a, String b){
+    	this.attributes.put(a, b);
+    }
 
     public Node getTwo(){
         return this.two;
