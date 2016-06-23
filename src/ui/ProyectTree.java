@@ -54,11 +54,10 @@ public class ProyectTree{
     }
     
     //Initialize database and generate tree.
-    private void init(){
-        //Not implemented correctly.     
+    private void init(){ 
         this.gm = new GraphManagement(); 
         gm.loadGraphs();
-        this.initProyects(); //Delete this.
+        this.initProyects();
         projectTree = new JTree(root);
        
         //Listener for when a item of project tree was clicked.
@@ -80,38 +79,9 @@ public class ProyectTree{
     public void setDrawer(GraphDrawer drawer){
         this.drawer = drawer;
     }
-    
-    //To create a new project, but only one preview no insert into database.
-    public void newProject(String name){
-        //Discuss about this method.
         
-        /* add new node in tree.
-        
-        DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(name);        
-        root.insert(newNode, 0);
-        model.reload();
-        */
-    }
-    
-    //Delete current project (graph) to database and tree proyects. 
-    public void deleteProject(){
-        //Not implemented method.
-        //GraphManagement.deleteGraph(current);        
-        
-    }
-    
-    //Save current project to database.
-    public void saveProject(){
-        //Not implemented method.
-        //GraphManagement.inserGraph(current);        
-    }
-    
-    //Search graph and pass to drawer.  
-    private void loadProject(String name){
-        //Not implemented method.
-        //GraphManagement.getGraph(name);
-        //Set current graph
-        
+ 
+    private void loadProject(String name){        
         Graph a = this.gm.getGraph(name);
         this.drawer.drawGraph(a);
         this.current = a;
@@ -124,9 +94,14 @@ public class ProyectTree{
     	this.current = g;
     }
     
+ 
     public void removeGraph(){
-    
-    	
+    	this.current = null;
+    	DefaultMutableTreeNode toRemove = (DefaultMutableTreeNode)projectTree.getLastSelectedPathComponent();
+    	this.model.removeNodeFromParent(toRemove);
+    	this.model.reload();
+    	//HACK
+    	this.drawer.clear();
     }
   
     public Graph getCurrent(){
@@ -134,9 +109,8 @@ public class ProyectTree{
     }
     
     private void initProyects(){
-        //Delete this..
         List<String> a = this.gm.getAllProyects();
-        root = new DefaultMutableTreeNode("Proyects"); 
+        root = new DefaultMutableTreeNode("Proyects");
         for(String s:a){
         	DefaultMutableTreeNode g2 = new DefaultMutableTreeNode(s);
         	root.add(g2);
