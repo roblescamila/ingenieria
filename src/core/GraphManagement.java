@@ -90,7 +90,7 @@ public class GraphManagement {
 		for(String n:gs){
 			Graph aux = new Graph(n);
 			aux.fromJSON(this.exportJSON(n));
-			this.grafos.add(aux);		
+			this.grafos.add(aux);	
 		}
 	}
 	

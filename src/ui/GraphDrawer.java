@@ -40,7 +40,6 @@ public class GraphDrawer {
         { 
             //Discuss how set the x and y to each vertex.
         	
-        	System.out.println(g.getName());
         	/* HAY QUE DIBUJARLO ACÁ
         	
             if (name == "Correlativas"){                
