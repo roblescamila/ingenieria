@@ -14,6 +14,25 @@ public class Node {
         this.neighborhood = new ArrayList<Edge>();
     }
 
+    public Node(String l) {
+		this.label = l;
+		this.attributes = new HashMap<String, String>();
+	}
+
+    public void setAttribute(String att, String desc){
+    	this.attributes.put(att, desc);
+    }
+    public void removeAttribute(String s){
+    	this.attributes.remove(s);
+    }
+	public void changeKey(String a, String b){
+    	String aux = this.attributes.get(a);
+    	this.attributes.remove(a);
+    	this.attributes.put(b, aux);
+    }
+    public void changeAtt(String a, String b){
+    	this.attributes.put(a, b);
+    }
     public void setLabel(String s){
     	this.label = s;
     }

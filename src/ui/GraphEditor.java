@@ -124,7 +124,7 @@ public class GraphEditor extends javax.swing.JFrame {
     }
     
     private void showAbout(){
-        //Not implemented method.
+        gm.saveGraphs();
         System.out.println("Show about");
     }
     
@@ -278,9 +278,9 @@ public class GraphEditor extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Help");
+        jMenu2.setText("Save");
 
-        menuAboutItem.setText("About");
+        menuAboutItem.setText("Save");
         menuAboutItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuAboutItemActionPerformed(evt);
