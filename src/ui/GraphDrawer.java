@@ -66,7 +66,7 @@ public class GraphDrawer {
         	}
         	
         	for(int i=0; i<edges.size(); i++){
-        		System.out.println("EDGE: " + edges.get(i).getOne().getLabel() + edges.get(i).getTwo().getLabel());
+        		System.out.println("EDGE: " + edges.get(i).getOne().getLabel() +" -> " + edges.get(i).getTwo().getLabel());
         		graph.insertEdge(parent, null, "",n.get(edges.get(i).getOne().getLabel()),n.get(edges.get(i).getTwo().getLabel()));
         	} 
         	     
