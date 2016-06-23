@@ -142,7 +142,7 @@ public class Wizard extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnNewButton.setBounds(231, 315, 121, 23);
+		btnNewButton.setBounds(231, 281, 121, 23);
 		contentPane.add(btnNewButton);
 		
 		JButton btnNuevoAtributoNodo = new JButton("Nuevo Atributo");
@@ -223,7 +223,7 @@ public class Wizard extends JFrame {
 				}
 			}
 		});
-		btnGuardar.setBounds(397, 315, 121, 23);
+		btnGuardar.setBounds(397, 281, 121, 57);
 		contentPane.add(btnGuardar);
 		
 		JButton btnEliminarAtributoNodo = new JButton("Eliminar Atributo");
@@ -248,6 +248,10 @@ public class Wizard extends JFrame {
 		});
 		btnNewButton_2.setBounds(65, 315, 121, 23);
 		contentPane.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("Eliminar Arco");
+		btnNewButton_3.setBounds(231, 315, 121, 23);
+		contentPane.add(btnNewButton_3);
 		
 		this.initCombos();
 	}
