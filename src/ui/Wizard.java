@@ -329,6 +329,9 @@ public class Wizard extends JFrame {
 	public void initCombos(){
 		comboBoxNodo.removeAllItems();
 		comboBoxAttNodo.removeAllItems();
+
+		for(Node n:g.getNodes())
+			System.out.println(n.toString());
 		for(Node n:g.getNodes())
 			comboBoxNodo.addItem(n.getLabel());
 		
