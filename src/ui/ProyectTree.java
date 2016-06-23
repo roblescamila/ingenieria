@@ -80,8 +80,7 @@ public class ProyectTree{
         this.drawer = drawer;
     }
         
- 
-    private void loadProject(String name){        
+     private void loadProject(String name){        
         Graph a = this.gm.getGraph(name);
         this.drawer.drawGraph(a);
         this.current = a;
@@ -94,8 +93,7 @@ public class ProyectTree{
     	this.current = g;
     }
     
- 
-    public void removeGraph(){
+     public void removeGraph(){
     	this.current = null;
     	DefaultMutableTreeNode toRemove = (DefaultMutableTreeNode)projectTree.getLastSelectedPathComponent();
     	this.model.removeNodeFromParent(toRemove);
@@ -118,6 +116,9 @@ public class ProyectTree{
         
     }
 
+    public void updateGraph(){
+    	this.drawer.drawGraph(this.current);
+    }
     
     
 }

@@ -121,6 +121,7 @@ public class GraphEditor extends javax.swing.JFrame {
     
     public void closeEdit(){
         w.setVisible(false);
+        this.projects.updateGraph();
     }
             
     @SuppressWarnings("unchecked")
