@@ -22,8 +22,6 @@ import javax.swing.UIManager;
 import core.Graph;
 import core.GraphManagement;
 
-
-
 public class GraphEditor extends javax.swing.JFrame {
 	private ProyectTree projects;
     private GraphManagement gm;
@@ -82,8 +80,10 @@ public class GraphEditor extends javax.swing.JFrame {
     private void exportPDF(){
         System.out.println("Export PDF..");
         
-        String dotFormat = ExportGraph.toDotFormat(); //"1->2;1->3;1->4;4->5;4->6;6->7;5->7;3->8;3->6;8->7;2->8;2->5;";
-        ExportGraph.createDotGraph(dotFormat, "New Graph");
+        Graph g = projects.getCurrent();
+        
+        String dotFormat = ExportGraph.toDotFormat(g);
+        ExportGraph.createDotGraph(dotFormat, "New_Graph");
     	
         this.detailsLabel.setText("Exported to PDF..");
         
