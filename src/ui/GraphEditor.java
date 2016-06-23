@@ -27,9 +27,7 @@ public class GraphEditor extends javax.swing.JFrame {
     private GraphManagement gm;
     private Wizard w;
     
-    /**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -7412994067181639826L;
 	public GraphEditor() {
         initComponents();
@@ -37,25 +35,19 @@ public class GraphEditor extends javax.swing.JFrame {
     }
 
     private void init(){ 
-        
-        //Getting all projects in database.
     	projects = ProyectTree.getInstance();
     	this.gm = projects.getManagement();
         this.scrollProyectsPanel.setViewportView(projects.getProyectTreeComponent());
         GraphDrawer graphDrawer = new GraphDrawer(this.graphPanel);
-        projects.setDrawer(graphDrawer);
-      
+        projects.setDrawer(graphDrawer);    
     }
    
-    private void newGraph(){
-        //Not implemented method.
-        System.out.println("New Graph..");     
-        Graph aux = gm.createGraph(JOptionPane.showInputDialog("Enter name: "));
+    private void newGraph(){    
+        Graph aux = gm.createGraph(JOptionPane.showInputDialog("Enter Graph Name: "));
         projects.addGraph(aux);
     }
     
     private void importGraph(){
-        //Not implemented method.
     	String out = "";
     	JFileChooser fc = new JFileChooser();
 		fc.setCurrentDirectory(new java.io.File("."));
@@ -73,29 +65,23 @@ public class GraphEditor extends javax.swing.JFrame {
         Graph aux = null;
         if(!out.isEmpty())
         	aux = this.gm.importJSON(out);
-        this.detailsLabel.setText("Import Graph..");
+        this.detailsLabel.setText("Imported Graph.");
         projects.addGraph(aux);
     }
     
-    private void exportPDF(){
-        System.out.println("Export PDF..");
-        
-        Graph g = projects.getCurrent();
-        
+    private void exportPDF(){        
+        Graph g = projects.getCurrent();        
         String dotFormat = ExportGraph.toDotFormat(g);
-        ExportGraph.createDotGraph(dotFormat, "New_Graph");
-    	
-        this.detailsLabel.setText("Exported to PDF..");
+        ExportGraph.createDotGraph(dotFormat, "New_Graph");    	
+        this.detailsLabel.setText("Exported to PDF.");
         
     }
     
     private void exportJSON(){
-        //Not implemented method.
     	PrintWriter writer = null;
 		try {
-			writer = new PrintWriter(JOptionPane.showInputDialog("Enter output name: ")+".json", "UTF-8");
+			writer = new PrintWriter(JOptionPane.showInputDialog("Enter output filename: ")+".json", "UTF-8");
 		} catch (HeadlessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -106,32 +92,31 @@ public class GraphEditor extends javax.swing.JFrame {
 		}
     	writer.println(this.projects.getCurrent().toJSON());
     	writer.close();
-         
-        this.detailsLabel.setText("Exported to JSON..");
+        
+        this.detailsLabel.setText("Exported to JSON.");
     }
     
     private void closeWindow(){
-        //Not implemented method.
-        //Ask if want save;
-        System.out.println("Close window");
-        this.detailsLabel.setText("Save? and Close..");
+        //HACK
+    	System.exit(0);
     }
     
     private void removeGraph(){
-        //Not implemented method.
     	gm.removeGraph(projects.getCurrent());
-        System.out.println("Remove graph");
+        projects.removeGraph();
     }
     
     private void showAbout(){
         gm.saveGraphs();
-        System.out.println("Show about");
     }
     
     private void editGraph(){
+    	if(projects.getCurrent()==null){
+            JOptionPane.showMessageDialog(this, "Seleccione un proyecto para editar.");
+    	}
         w = new Wizard(projects.getCurrent(), this);
         w.setVisible(true);
-        System.out.println("Edit Graph");
+
     }
     
     public void closeEdit(){
