@@ -72,7 +72,7 @@ public class GraphEditor extends javax.swing.JFrame {
     private void exportPDF(){        
         Graph g = projects.getCurrent();        
         String dotFormat = ExportGraph.toDotFormat(g);
-        ExportGraph.createDotGraph(dotFormat, "New_Graph");    	
+        ExportGraph.createDotGraph(dotFormat,  g.getName());    	
         this.detailsLabel.setText("Exported to PDF.");
         
     }
