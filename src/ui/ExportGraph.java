@@ -27,12 +27,12 @@ public class ExportGraph {
 	public static String toDotFormat(Graph graph) {
 		String out = "";
 		Set<Edge> edges = graph.getEdges();
-		for (Iterator<Edge> it = edges.iterator(); it.hasNext(); ) {
-			Edge e = it.next();
+		for(Edge e : edges) {
 			String from = e.getOne().getLabel();
 			String to = e.getTwo().getLabel();
 			out = out + from + "->" + to + ";";			
 		}
+		
 		System.out.println("OUT: " + out);
 		return out;
 	}
