@@ -228,8 +228,6 @@ public class GraphViz
 
 //            img = File.createTempFile("graph_", "."+type, new File(GraphViz.TEMP_DIR));
             Runtime rt = Runtime.getRuntime();
-            
-//            System.out.println("DOT: " + DOT);
 
             // patch by Mike Chenault
              String[] args = {DOT, "-T"+type, "-Gdpi="+dpiSizes[this.currentDpiPos], dot.getAbsolutePath(), "-o", img.getAbsolutePath()};
@@ -271,7 +269,7 @@ public class GraphViz
     {
         File temp;
         try {
-            temp = File.createTempFile("temp",".dot", new File("c:\\temp"));
+            temp = File.createTempFile("temp",".dot", new File(GraphViz.TEMP_DIR));
             FileWriter fout = new FileWriter(temp);
             fout.write(str);
                        BufferedWriter br = new BufferedWriter(new FileWriter("dotsource.dot"));
